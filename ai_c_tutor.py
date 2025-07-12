@@ -41,7 +41,7 @@ CORE_C_TOPICS = [
 ]
 
 C_DOMAINS = {
-    "Basic C": [],
+    "None": [],
     "Systems Programming": [
         "Processes and Forking",
         "Signals and Pipes",
@@ -151,15 +151,11 @@ username = st.session_state.username
 st.success(f"Welcome, {username}!")
 domain = st.sidebar.selectbox("👨‍💼 Select C Domain (Optional)", list(C_DOMAINS.keys()), index=0)
 
-# Build a full learning list based on selected domain
-ROADMAP = []
-if domain == "Basic C":
+# ✅ MODIFIED HERE: Only show domain topics if a domain is selected
+if domain == "None":
     ROADMAP = CORE_C_TOPICS
 else:
-    domain_topics = C_DOMAINS[domain]
-    # Auto-filter core topics to only those relevant for the domain
-    REQUIRED_CORE = CORE_C_TOPICS[:10]  # common essential ones
-    ROADMAP = REQUIRED_CORE + domain_topics
+    ROADMAP = C_DOMAINS[domain]  # no more core concepts included
 
 progress = load_progress(ROADMAP, username)
 
@@ -232,5 +228,6 @@ if "selected_concept" in st.session_state:
     if st.session_state.get("quiz"):
         st.markdown("**🧪 Quiz:**")
         st.markdown(st.session_state.quiz)
+
 else:
     st.info("You're done with all current topics! Try a different C domain or reset your progress.")
